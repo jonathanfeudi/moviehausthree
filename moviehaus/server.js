@@ -10,7 +10,7 @@ const dotenv      = require('dotenv');
 const app       = express();
 const PORT     = process.argv[2]|| process.env.port||3000;
 
-// const taskRoutes     = require('./routes/tasks');
+const movieRoutes     = require('./routes/movies');
 
 require('dotenv').config()
 
@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname,'public')))
 
 // set up some logging
 app.use(logger('dev'));
-// app.use('/tasks',taskRoutes);
+app.use('/movies',movieRoutes);
 
 // serve the index.html file statically
 app.get('/',(req,res)=>{
