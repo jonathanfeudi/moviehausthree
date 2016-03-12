@@ -6,6 +6,7 @@ const bodyParser  = require('body-parser');
 // const db          = require('./db/pg');
 const pgp         = require('pg-promise');
 const dotenv      = require('dotenv');
+const request     = require('request');
 
 const app       = express();
 const PORT     = process.argv[2]|| process.env.port||3000;
@@ -23,12 +24,12 @@ app.use(express.static(path.join(__dirname,'public')))
 
 // set up some logging
 app.use(logger('dev'));
-app.use('/movies',movieRoutes);
+app.use('/movies', movieRoutes);
 
 // serve the index.html file statically
-app.get('/',(req,res)=>{
-  res.sendFile('index.html')
-})
+// app.get('/',(req,res)=>{
+//   res.sendFile('index.html')
+// })
 
 // turn me on!
 app.listen(PORT , ()=>
