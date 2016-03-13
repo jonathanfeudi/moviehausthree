@@ -8,14 +8,19 @@ const App = React.createClass({
 
   renderMovieSearch:function(data) {
     // console.log('render', data)
-    this.state.movies = JSON.parse(data);
+    this.state.movies = JSON.parse(data)
+    this.state.movies = this.state.movies.Search
     this.setState({ movies: this.state.movies })
-    console.log(this.state.movies.Search)
-    // var b = this.state.movies.Search
-    // // var array = [];
-    // b.Search.forEach((movie)=> {
-    //   console.log(movie)
-    // })
+    console.log(this.state.movies)
+
+  },
+
+  renderMyMovie : function(key) {
+    return (
+    <Movie key={key} index={key} details={this.state.movies[key]} />
+
+    )
+      console.log('im in the renderMyMovie')
   },
 
 
@@ -24,11 +29,9 @@ const App = React.createClass({
       <div>
 
         <h1>MovieHaus</h1>
-        <h1></h1>
-        <CreateMovieForm renderMovieSearch={this.renderMovieSearch}/>
 
-        <div>{}
-        </div>
+        <CreateMovieForm renderMovieSearch={this.renderMovieSearch}/>
+        <h3>{Object.keys(this.state.movies).map( this.renderMyMovie )}</h3>
 
       </div>
     )
@@ -68,6 +71,20 @@ const CreateMovieForm = React.createClass({
           <button className="searchButton" type="submit" name="action">Add Movie</button>
         </div>
       </form>
+    )
+  }
+})
+
+const Movie = React.createClass({
+
+  render : function (){
+    console.log('im in the movie')
+    return(
+      <div>
+        <h1>{this.props.details.Title}</h1>
+        <h2>{this.props.details.Year}</h2>
+        
+      </div>
     )
   }
 })
