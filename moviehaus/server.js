@@ -13,7 +13,7 @@ const PORT     = process.argv[2]|| process.env.port||3000;
 
 const movieRoutes     = require('./routes/movies');
 
-require('dotenv').config()
+dotenv.load();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
