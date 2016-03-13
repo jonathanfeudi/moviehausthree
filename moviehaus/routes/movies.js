@@ -7,7 +7,7 @@ const request     = require('request')
 
 // // /movies
 movies.get('/', function(req, res) {
-    let search = req.query.search;
+    let search = req.query.t;
     request(`http://www.omdbapi.com/?s=${search}`, function(err, response, body) {
         if(!err && response.statusCode == 200) {
             res.send(body);

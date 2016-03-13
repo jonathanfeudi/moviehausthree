@@ -8,7 +8,7 @@ const App = React.createClass({
 
   searchMovie:function(name){
     console.log(name)
-    $.get('/movies/?s=showgirls', function(data, status){
+    $.get('/movies?t=' + name, function(data, status){
         console.log(data)
     });
     // return !this.filterComplete(key)
