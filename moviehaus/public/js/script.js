@@ -17,11 +17,27 @@ const App = React.createClass({
 
   renderMyMovie : function(key) {
     return (
-    <Movie key={key} index={key} details={this.state.movies[key]} />
+    <Movie key={key} index={key} details={this.state.movies[key]} addMovie={this.addMovie}/>
 
     )
       console.log('im in the renderMyMovie')
   },
+
+  addMovie: function (oneMovie) {
+    var updateOneMovie = (data) =>{
+      var newID = data.id
+      this.state.movies[newID] = data;
+
+      this.setState({ movies: this.state.movies });
+    }
+
+    $.post('/movies/api', oneMovie)
+    .done(updateOneMovie)
+
+
+
+},
+
 
 
   render:function() {
@@ -77,6 +93,19 @@ const CreateMovieForm = React.createClass({
 })
 
 const Movie = React.createClass({
+  handleSubmit : function (event) {
+    event.preventDefault()
+    var oneMovie = {
+      poster: this.refs.poster.value,
+      title: this.refs.title.value,
+      year: this.refs.year.value
+  }
+
+  this.props.addMovie(oneMovie)
+  this.refs.addMovieForm.reset()
+  $
+  },
+
 
 
 
@@ -86,13 +115,13 @@ const Movie = React.createClass({
       <div className="row">
         <h3>{this.props.details.Title}</h3>
         <img src={this.props.details.Poster} />
-        <form ref="addMovieForm">
-          <input type="hidden" defaultValue={this.props.details.Poster}  />
-          <input type="hidden" defaultValue={this.props.details.Title} />
-          <input type="hidden" defaultValue={this.props.details.Year} />
+        <form id = "form" ref="addMovieForm" onSubmit={this.handleSubmit}>
+          <input ref="poster" type="hidden" defaultValue={this.props.details.Poster}  />
+          <input ref="title" type="hidden" defaultValue={this.props.details.Title} />
+          <input ref="year" type="hidden" defaultValue={this.props.details.Year} />
           <input type="submit" defaultValue="Add" />
         </form>
-        </div>
+      </div>
     )
   }
 })
