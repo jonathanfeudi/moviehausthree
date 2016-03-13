@@ -17,23 +17,40 @@ const App = React.createClass({
 
   renderMyMovie : function(key) {
     return (
-    <Movie key={key} index={key} details={this.state.movies[key]} />
+    <Movie key={key} index={key} details={this.state.movies[key]} addMovie={this.addMovie}/>
 
     )
       console.log('im in the renderMyMovie')
   },
 
+  addMovie: function (oneMovie) {
+    var updateOneMovie = (data) =>{
+      var newID = data.id
+      this.state.movies[newID] = data;
+
+      this.setState({ movies: this.state.movies });
+    }
+
+    $.post('/movies/api', oneMovie)
+    .done(updateOneMovie)
+
+
+
+},
+
+
 
   render:function() {
     return (
-      <div>
-
-        <h1>MovieHaus</h1>
-
-        <CreateMovieForm renderMovieSearch={this.renderMovieSearch}/>
-        <h3>{Object.keys(this.state.movies).map( this.renderMyMovie )}</h3>
-
+      <div className="container">
+        <div className="row">
+          <h1>MovieHaus</h1>
+        </div>
+        <div className="row">
+          <CreateMovieForm renderMovieSearch={this.renderMovieSearch}/>
+          <h3>{Object.keys(this.state.movies).map( this.renderMyMovie )}</h3>
       </div>
+    </div>
     )
   }
 });
@@ -76,14 +93,34 @@ const CreateMovieForm = React.createClass({
 })
 
 const Movie = React.createClass({
+  handleSubmit : function (event) {
+    event.preventDefault()
+    var oneMovie = {
+      poster: this.refs.poster.value,
+      title: this.refs.title.value,
+      year: this.refs.year.value
+  }
+
+  this.props.addMovie(oneMovie)
+  this.refs.addMovieForm.reset()
+  $
+  },
+
+
+
 
   render : function (){
     console.log('im in the movie')
     return(
-      <div>
-        <h1>{this.props.details.Title}</h1>
-        <h2>{this.props.details.Year}</h2>
-        
+      <div className="row">
+        <h3>{this.props.details.Title}</h3>
+        <img src={this.props.details.Poster} />
+        <form id = "form" ref="addMovieForm" onSubmit={this.handleSubmit}>
+          <input ref="poster" type="hidden" defaultValue={this.props.details.Poster}  />
+          <input ref="title" type="hidden" defaultValue={this.props.details.Title} />
+          <input ref="year" type="hidden" defaultValue={this.props.details.Year} />
+          <input type="submit" defaultValue="Add" />
+        </form>
       </div>
     )
   }
