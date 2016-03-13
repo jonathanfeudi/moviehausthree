@@ -13,9 +13,9 @@ var cn = {
 var db = pgp(cn)
 
 function addMovie(req, res, next){
-  db.any("INSERT INTO movies(imdb, title, year, poster, showtimes) VALUES($1, $2, $3, $4, $5) ", [req.body.imdb, req.body.title, req.body.year, req.body.poster, req.body.showtimes])
+  db.any("INSERT INTO movies(imdb, title, year, poster, showtimes) VALUES($1, $2, $3, $4, $5) RETURNING id", [req.body.imdb, req.body.title, req.body.year, req.body.poster, req.body.showtimes])
     .then(function(data){
-      console.log(data);
+      res.data = data;
       next()
     })
     .catch(function(error){
