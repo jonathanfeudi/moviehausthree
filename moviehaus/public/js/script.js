@@ -26,14 +26,15 @@ const App = React.createClass({
 
   render:function() {
     return (
-      <div>
-
-        <h1>MovieHaus</h1>
-
-        <CreateMovieForm renderMovieSearch={this.renderMovieSearch}/>
-        <h3>{Object.keys(this.state.movies).map( this.renderMyMovie )}</h3>
-
+      <div className="container">
+        <div className="row">
+          <h1>MovieHaus</h1>
+        </div>
+        <div className="row">
+          <CreateMovieForm renderMovieSearch={this.renderMovieSearch}/>
+          <h3>{Object.keys(this.state.movies).map( this.renderMyMovie )}</h3>
       </div>
+    </div>
     )
   }
 });
@@ -77,14 +78,21 @@ const CreateMovieForm = React.createClass({
 
 const Movie = React.createClass({
 
+
+
   render : function (){
     console.log('im in the movie')
     return(
-      <div>
-        <h1>{this.props.details.Title}</h1>
-        <h2>{this.props.details.Year}</h2>
-        
-      </div>
+      <div className="row">
+        <h3>{this.props.details.Title}</h3>
+        <img src={this.props.details.Poster} />
+        <form ref="addMovieForm">
+          <input type="hidden" defaultValue={this.props.details.Poster}  />
+          <input type="hidden" defaultValue={this.props.details.Title} />
+          <input type="hidden" defaultValue={this.props.details.Year} />
+          <input type="submit" defaultValue="Add" />
+        </form>
+        </div>
     )
   }
 })
