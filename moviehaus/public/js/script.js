@@ -10,12 +10,12 @@ const App = React.createClass({
     // console.log('render', data)
     this.state.movies = JSON.parse(data);
     this.setState({ movies: this.state.movies })
-    console.log(this.state.movies.Search[0].Title)
-    var b = this.state.movies.Search
-    // var array = [];
-    b.Search.forEach((movie)=> {
-      console.log(movie)
-    })
+    console.log(this.state.movies.Search)
+    // var b = this.state.movies.Search
+    // // var array = [];
+    // b.Search.forEach((movie)=> {
+    //   console.log(movie)
+    // })
   },
 
 
@@ -24,6 +24,7 @@ const App = React.createClass({
       <div>
 
         <h1>MovieHaus</h1>
+        <h1></h1>
         <CreateMovieForm renderMovieSearch={this.renderMovieSearch}/>
 
         <div>{}
